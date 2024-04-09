@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,25 +12,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { eventFormSchema } from "@/lib/validator";
-import { eventDefaultValues } from "@/constants";
-import Dropdown from "./Dropdown";
-import { FileUploader } from "./FileUploader";
-import { useState } from "react";
-import Image from "next/image";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Checkbox } from "../ui/checkbox";
-import { useUploadThing } from "@/lib/uploadthing";
-import { useRouter } from "next/navigation";
-import { createEvent } from "@/lib/actions/event.actions";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { eventFormSchema } from '@/lib/validator';
+import { eventDefaultValues } from '@/constants';
+import Dropdown from './Dropdown';
+import { FileUploader } from './FileUploader';
+import { useState } from 'react';
+import Image from 'next/image';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Checkbox } from '../ui/checkbox';
+import { useUploadThing } from '@/lib/uploadthing';
+import { useRouter } from 'next/navigation';
+import { createEvent } from '@/lib/actions/event.actions';
 
 type EventFormProps = {
   userId: string;
-  type: "Create" | "Update";
+  type: 'Create' | 'Update';
 };
 
 const EventForm = ({ userId, type }: EventFormProps) => {
@@ -39,7 +39,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
 
   const router = useRouter();
 
-  const { startUpload } = useUploadThing("imageUploader");
+  const { startUpload } = useUploadThing('imageUploader');
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -62,12 +62,12 @@ const EventForm = ({ userId, type }: EventFormProps) => {
       uploadedImageUrl = uploadedImages[0].url;
     }
 
-    if (type === "Create") {
+    if (type === 'Create') {
       try {
         const newEvent = await createEvent({
           event: { ...values, imageUrl: uploadedImageUrl },
           userId,
-          path: "/profile",
+          path: '/profile',
         });
         if (newEvent) {
           form.reset();
@@ -336,7 +336,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
           disabled={form.formState.isSubmitting}
           className="button col-span-2 w-full"
         >
-          {form.formState.isSubmitting ? "Submitting..." : `${type} Event`}
+          {form.formState.isSubmitting ? 'Submitting...' : `${type} Event`}
         </Button>
       </form>
     </Form>

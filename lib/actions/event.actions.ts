@@ -6,6 +6,7 @@ import { connectToDatabase } from '../database';
 import User from '../database/models/user.model';
 import Event from '../database/models/event.model';
 import Category from '../database/models/category.model';
+import { revalidatePath } from 'next/cache';
 
 const populateEvent = (query: any) => {
   return query
@@ -18,18 +19,20 @@ const populateEvent = (query: any) => {
 };
 
 export const createEvent = async ({
-  event,
   userId,
+  event,
   path,
 }: CreateEventParams) => {
   try {
     await connectToDatabase();
 
-    const organizer = User.findById(userId);
+    const organizer = await User.findById(userId);
+    if (!organizer) throw new Error('Organizer not found');
 
-    if (!organizer) {
-      throw new Error('Organizer was not found');
-    }
+    console.log({
+      categoryId: event.categoryId,
+      organizerId: userId,
+    });
 
     const newEvent = await Event.create({
       ...event,
@@ -39,6 +42,7 @@ export const createEvent = async ({
 
     return JSON.parse(JSON.stringify(newEvent));
   } catch (error) {
+    console.log(error);
     handleError(error);
   }
 };

@@ -32,12 +32,12 @@ const EventDetails = async ({ params: { id } }: SearchParamProps) => {
                 </p>
               </div>
 
-              {/* <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
+              <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
                 by{' '}
                 <span className="text-primary-500">
                   {event.organizer.firstName} {event.organizer.lastName}
                 </span>
-              </p> */}
+              </p>
             </div>
           </div>
           {/* CHECKOUT BUTTON */}
