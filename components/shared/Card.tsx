@@ -3,6 +3,7 @@ import { formatDateTime } from '@/lib/utils';
 import { auth } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { DeleteConfirmation } from './DeleteConfirmation';
 
 type CardProps = {
   event: IEvent;
@@ -26,7 +27,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       />
       {isEventCreator && !hidePrice && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
-          <Link href={`/events/${event._id}/update`}>
+          <Link href={`/events/create/${event._id}/update`}>
             <Image
               src="/assets/icons/edit.svg"
               alt="edit"
@@ -34,6 +35,8 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               height={20}
             />
           </Link>
+
+          <DeleteConfirmation eventId={event._id} />
         </div>
       )}
       <Link
@@ -45,7 +48,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             <span className="p-semibold-14 w-min rounded-full bg-green-100 px-4 py-1 text-green-600">
               {event.isFree ? 'FREE' : `$${event.price}`}
             </span>
-            <p className="p-semibold-14 rounded-full bg-grey-500/10 px-4 py-1 text-grey-500">
+            <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1">
               {event.category.name}
             </p>
           </div>
